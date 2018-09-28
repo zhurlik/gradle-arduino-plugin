@@ -30,11 +30,12 @@ class ArduinoPlugin implements Plugin<Project> {
         }
 
         project.configurations {
-            arduinoStudio
+            arduinoIde
         }
 
         project.dependencies {
-            arduinoStudio 'arduino:linux64:1.8.7@tar.xz'
+            // todo: extract to a property or a project extension
+            arduinoIde 'arduino:linux64:1.8.7@tar.xz'
         }
     }
 }
