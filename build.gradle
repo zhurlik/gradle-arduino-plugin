@@ -1,0 +1,21 @@
+plugins {
+    id 'idea'
+    id 'com.github.kt3k.coveralls' version '2.8.2'
+    id 'groovy'
+    id 'jacoco'
+}
+
+group = 'com.github.zhurlik'
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled = true
+        xml.enabled = true
+        csv.enabled = false
+    }
+}
