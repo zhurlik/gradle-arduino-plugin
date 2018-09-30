@@ -1,5 +1,7 @@
 package com.github.zhurlik
 
+import com.github.zhurlik.extension.ArduinoIde
+import com.github.zhurlik.task.Install
 import groovy.util.logging.Slf4j
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -15,27 +17,30 @@ class ArduinoPlugin implements Plugin<Project> {
     void apply(final Project project) {
         logger.info '>> Plugin: Arduino'
 
+        project.extensions.add("ArduinoIde", ArduinoIde)
+
         project.repositories {
-                //https://downloads.arduino.cc/arduino-1.8.7-linux64.tar.xz
-                ivy {
-                    url "https://downloads.arduino.cc"
-                    layout 'pattern', {
-
-                        //compile 'arduino:linux64:1.8.7@tar.xz'
-                        //This maps to the pattern: [organisation]:[module]:[revision]:[classifier]@[ext]
-
-                        artifact '/[organisation]-[revision]-[module].[ext]'
-                    }
+            //https://downloads.arduino.cc/arduino-1.8.7-linux64.tar.xz
+            ivy {
+                url "https://downloads.arduino.cc"
+                layout 'pattern', {
+                    //compile 'arduino:linux64:1.8.7@tar.xz'
+                    //This maps to the pattern: [organisation]:[module]:[revision]:[classifier]@[ext]
+                    artifact '/[organisation]-[revision]-[module].[ext]'
                 }
+            }
+            mavenCentral()
         }
 
         project.configurations {
             arduinoIde
+            antCompress
         }
 
         project.dependencies {
-            // todo: extract to a property or a project extension
-            arduinoIde 'arduino:linux64:1.8.7@tar.xz'
+            antCompress group: 'org.apache.ant', name: 'ant-compress', version: '1.5'
         }
+
+        project.tasks.create('install', Install)
     }
 }
