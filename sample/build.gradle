@@ -1,0 +1,17 @@
+buildscript {
+    repositories {
+        maven {
+            url uri('../tmp-repo')
+        }
+    }
+
+    dependencies {
+        classpath group: 'com.github.zhurlik', name: 'gradle-arduino-plugin', version: '0.1'
+    }
+}
+
+apply plugin: 'com.github.zhurlik.arduino'
+
+dependencies {
+    arduinoIde 'arduino:linux64:1.8.7@tar.xz'
+}
