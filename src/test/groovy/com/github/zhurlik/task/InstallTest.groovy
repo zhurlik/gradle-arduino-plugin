@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test
 
 import java.nio.file.Paths
 
+import static org.junit.jupiter.api.Assertions.assertTrue
+
 @Slf4j('logger')
 class InstallTest {
     private static final File PROJECT_DIR = Paths.get(InstallTest.getClassLoader().getResource('./').file, 'test-project').toFile()
