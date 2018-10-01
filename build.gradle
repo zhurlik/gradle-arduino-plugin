@@ -18,6 +18,7 @@ dependencies {
     compile gradleApi()
     compile localGroovy()
     compile group: 'org.apache.ant', name: 'ant-compress', version: '1.5'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
 
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.+'
     testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.3.+'

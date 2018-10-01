@@ -3,6 +3,7 @@ buildscript {
         maven {
             url uri('../tmp-repo')
         }
+        mavenCentral()
     }
 
     dependencies {

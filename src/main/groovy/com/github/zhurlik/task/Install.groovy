@@ -3,7 +3,7 @@ package com.github.zhurlik.task
 import groovy.util.logging.Slf4j
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
-import org.gradle.internal.impldep.org.apache.commons.io.FilenameUtils
+import org.apache.commons.io.FilenameUtils
 
 import java.nio.file.Paths
 
