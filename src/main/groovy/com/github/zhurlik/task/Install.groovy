@@ -17,28 +17,47 @@ class Install extends DefaultTask {
 
     @TaskAction
     def action() {
-        def dist = project.configurations['arduinoIde'].files[0]
-        def to = Paths.get(project.projectDir.path, 'arduino-ide').toFile()
+        project.configurations['arduinoIde']
+                .allDependencies
+                .findAll { 'arduino'.equals(it.group) }
+                .forEach { dep ->
+            final File dist = project.configurations['arduinoIde']
+                    .files
+                    .find { it.name.contains(dep.name) }
+            final String type = FilenameUtils.getExtension(dist.path)
 
-        def type = FilenameUtils.getExtension(dist.path)
-
-        // TODO: other types and OS
-        switch (type) {
-            case 'xz': unxz(dist, to)
-                break
-            default: throw UnsupportedOperationException("Unsupported archive: ${dist}")
+            switch (type) {
+                case 'xz': unxz(dist)
+                    break
+                case 'zip': unzip(dist)
+                    break
+                default: throw UnsupportedOperationException("Unsupported archive: ${dist}")
+            }
         }
     }
 
-    private void unxz(File dist, to) {
+    def unzip(final File dist) {
+        project.copy {
+            from project.zipTree(dist)
+            into ideHome()
+        }
+    }
+
+    def unxz(final File dist) {
+        final File tmp = Paths.get(project.projectDir.path, 'arduino-ide.tmp').toFile()
         project.ant.taskdef(name: 'unxz',
                 classname: 'org.apache.ant.compress.taskdefs.UnXZ',
                 classpath: project.configurations.antCompress.asPath)
-        project.ant.unxz(src: dist, dest: to)
+        project.ant.unxz(src: dist, dest: tmp)
         project.copy {
-            from project.tarTree(to)
-            into project.projectDir
+            from project.tarTree(tmp)
+            into ideHome()
         }
-        project.delete(to)
+        project.delete(tmp)
+    }
+
+    File ideHome() {
+        final File ideHomeDir = project.extensions.getByName("ArduinoIde").home
+        return (ideHomeDir == null ? project.projectDir : ideHomeDir)
     }
 }
