@@ -12,4 +12,5 @@ The following tasks will be implemented:
 * Burning the Bootloader
 
 # How to use
-See [a simple project](sample)
+* See [a simple project](sample)
+* See [smart-home](https://github.com/zhurlik/smart-home/blob/master/arduino/studio/build.gradle)
