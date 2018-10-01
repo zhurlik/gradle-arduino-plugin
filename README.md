@@ -12,3 +12,4 @@ The following tasks will be implemented:
 * Burning the Bootloader
 
 # How to use
+See [a simple project](sample)
