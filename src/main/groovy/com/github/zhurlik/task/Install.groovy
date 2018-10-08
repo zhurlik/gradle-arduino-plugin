@@ -39,25 +39,25 @@ class Install extends DefaultTask {
     def unzip(final File dist) {
         project.copy {
             from project.zipTree(dist)
-            into ideHome()
+            into project.projectDir
         }
     }
 
     def unxz(final File dist) {
-        final File tmp = Paths.get(project.projectDir.path, 'arduino-ide.tmp').toFile()
+        final File tmp = Paths.get(getTemporaryDir().path, 'downloaded-tmp.tar.xz').toFile()
+
+        // ant task
         project.ant.taskdef(name: 'unxz',
                 classname: 'org.apache.ant.compress.taskdefs.UnXZ',
                 classpath: project.configurations.antCompress.asPath)
         project.ant.unxz(src: dist, dest: tmp)
+
+        // untar
         project.copy {
             from project.tarTree(tmp)
-            into ideHome()
+            into project.projectDir
         }
+        // del temp file
         project.delete(tmp)
-    }
-
-    File ideHome() {
-        final File ideHomeDir = project.extensions.getByName("ArduinoIde").home
-        return (ideHomeDir == null ? project.projectDir : ideHomeDir)
     }
 }

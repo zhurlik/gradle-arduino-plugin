@@ -102,18 +102,14 @@ class InstallTest {
             arduinoIde 'arduino:macosx:1.8.7@zip'
         }
 
-        testProject.ArduinoIde {
-                home = testProject.file('arduino-on-macosx')
-        }
-
         testProject.tasks['install'].actions.each {
             it.execute(testProject.tasks.install)
         }
 
-        final File ideDir = Paths.get(testProject.projectDir.path, 'arduino-on-macosx').toFile()
+        final File ideDir = Paths.get(testProject.projectDir.path, 'Arduino.app').toFile()
         assertTrue(ideDir.exists())
         assertTrue(ideDir.isDirectory())
-        assertEquals('[Arduino.app]', ideDir.listFiles().collect { it.name }.toString())
+        assertEquals('[Contents]', ideDir.listFiles().collect { it.name }.toString())
     }
 
     @Test
