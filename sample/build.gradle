@@ -1,3 +1,5 @@
+import com.github.zhurlik.extension.ArduinoIde
+
 buildscript {
     repositories {
         maven {
@@ -13,6 +15,14 @@ buildscript {
 
 apply plugin: 'com.github.zhurlik.arduino'
 
+ArduinoIde {
+    homeDir "${projectDir}/arduino-1.8.7"
+}
+
 dependencies {
     arduinoIde 'arduino:linux64:1.8.7@tar.xz'
+}
+
+task t (type: Exec) {
+    commandLine "${project.extensions.getByType(ArduinoIde).homeDir}/arduino-builder" , '--version'
 }
