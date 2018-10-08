@@ -1,6 +1,7 @@
 package com.github.zhurlik
 
 import com.github.zhurlik.extension.ArduinoIde
+import com.github.zhurlik.task.DumpPrefs
 import com.github.zhurlik.task.Install
 import groovy.util.logging.Slf4j
 import org.gradle.api.Plugin
@@ -43,5 +44,6 @@ class ArduinoPlugin implements Plugin<Project> {
         }
 
         project.tasks.create('install', Install)
+        project.tasks.create('dump-prefs', DumpPrefs)
     }
 }
