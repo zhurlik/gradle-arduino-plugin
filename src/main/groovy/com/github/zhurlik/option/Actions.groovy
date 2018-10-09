@@ -24,7 +24,7 @@ enum Actions {
      */
     PREPROCESS('preprocess')
 
-    private String command
+    private final String command
 
     Actions(final String command) {
         this.command = command

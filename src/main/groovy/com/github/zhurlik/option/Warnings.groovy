@@ -11,12 +11,11 @@ enum Warnings {
     MORE('more'),
     ALL('all');
 
-    private String name
+    private final String name
 
     Warnings(final String name) {
         this.name = name
     }
-
 
     @Override
     String toString() {

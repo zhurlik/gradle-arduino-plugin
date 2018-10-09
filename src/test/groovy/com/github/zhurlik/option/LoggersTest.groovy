@@ -4,9 +4,10 @@ import org.junit.jupiter.api.Test
 
 import static org.junit.jupiter.api.Assertions.assertEquals
 
-class WarningsTest {
+class LoggersTest {
+
     @Test
     void testMain() {
-        assertEquals('[none, default, more, all]', Warnings.values().toArrayString())
+        assertEquals('[human, humantags, machine]', Loggers.values().toArrayString())
     }
 }

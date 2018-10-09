@@ -62,23 +62,46 @@ class ArduinoBuilderOptions {
      */
     Warnings warning = Warnings.DEFAULT
 
-    /*
+    /**
+     *  -verbose: Optional, turns on verbose mode.
+     */
+    boolean verbose = false
 
-       -verbose: Optional, turns on verbose mode.
+    /**
+     * -quiet: Optional, supresses almost every output.
+     */
+    boolean quite = false
 
-       -quiet: Optional, supresses almost every output.
+    /**
+     * -debug-level: Optional, defaults to "5". Used for debugging.
+     * Set it to 10 when submitting an issue.
+     */
+    byte debugLevel = 5
 
-       -debug-level: Optional, defaults to "5". Used for debugging. Set it to 10 when submitting an issue.
+    /**
+     * -core-api-version: Optional, defaults to "10600".
+     * The version of the Arduino IDE which is using this tool.
+     */
+    String coreApiVersion = '10600'
 
-       -core-api-version: Optional, defaults to "10600". The version of the Arduino IDE which is using this tool.
+    /**
+     * -logger: Optional, can be "human", "humantags" or "machine". Defaults to "human".
+     */
+    Loggers logger = Loggers.HUMAN
 
-       -logger: Optional, can be "human", "humantags" or "machine". Defaults to "human". If "humantags" the messages are qualified with a prefix that indicates their level (info, debug, error). If "machine", messages emitted will be in a format which the Arduino IDE understands and that it uses for I18N.
+    /**
+     * -version: if specified, prints version and exits.
+     */
+    boolean version = false
 
-       -version: if specified, prints version and exits.
+    /**
+     *  -build-options-file: it specifies path to a local build.options.json file (see paragraph below),
+     *  which allows you to omit specifying params such as -hardware, -tools, -libraries, -fqbn, -pref and -ide-version.
+     */
+    String buildOptionsFile
 
-       -build-options-file: it specifies path to a local build.options.json file (see paragraph below), which allows you to omit specifying params such as -hardware, -tools, -libraries, -fqbn, -pref and -ide-version.
-
-       -vid-pid: when specified, VID/PID specific build properties are used, if boards supports them.
-
-       */
+    /**
+     * -vid-pid: when specified, VID/PID specific build properties are used, if boards supports them.
+     */
+    String vidPid
 }
