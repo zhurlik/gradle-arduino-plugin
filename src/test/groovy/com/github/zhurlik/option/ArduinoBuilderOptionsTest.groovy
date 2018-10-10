@@ -51,6 +51,6 @@ class ArduinoBuilderOptionsTest {
         options.addPrefs(ideHome)
         options.verbose = true
 
-        assertEquals(expected, options.convertToArgs().join('\n'))
+        assertEquals(expected, options.convertToArgs().join('\n'), "Actual: ${options.convertToArgs().join('\n')}")
     }
 }
