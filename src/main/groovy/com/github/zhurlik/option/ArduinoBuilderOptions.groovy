@@ -1,5 +1,10 @@
 package com.github.zhurlik.option
 
+import org.apache.commons.io.FileUtils
+
+import java.nio.file.Paths
+import java.time.LocalTime
+
 /**
  * See https://github.com/arduino/arduino-builder
  */
@@ -104,4 +109,135 @@ class ArduinoBuilderOptions {
      * -vid-pid: when specified, VID/PID specific build properties are used, if boards supports them.
      */
     String vidPid
+
+    /**
+     * -ide-version=10807
+     */
+    String ideVersion
+
+    /**
+     * -built-in-libraries /opt/arduino-1.8.7/libraries
+     */
+    String builtInLibraries
+
+    /**
+     * -build-cache /tmp/arduino_cache_294101
+     */
+    String buildCache
+
+    void addBuiltInLibraries(final String ideHome) {
+        /**
+         * -built-in-libraries /opt/arduino-1.8.7/libraries
+         */
+        this.builtInLibraries = Paths.get(ideHome, 'libraries').toString()
+    }
+
+    void addHardware(final String ideHome) {
+        /**
+         * -hardware /opt/arduino-1.8.7/hardware
+         */
+        this.hardware.add(Paths.get(ideHome, 'hardware').toString())
+    }
+
+    void addBuildCache() {
+        if (this.buildCache == null) {
+            this.buildCache = Paths.get(FileUtils.getTempDirectory().toString(),
+                    "arduino_cache_${LocalTime.now().getNano().toString()}")
+        }
+    }
+
+    void addBuildPath() {
+        if (this.buildPath == null) {
+            this.buildPath = Paths.get(FileUtils.getTempDirectory().toString(),
+                    "arduino_build_${LocalTime.now().getNano().toString()}")
+        }
+    }
+
+    void addTools(final String ideHome) {
+        /**
+         * -tools /opt/arduino-1.8.7/tools-builder
+         * -tools /opt/arduino-1.8.7/hardware/tools/avr
+         */
+        [
+                Paths.get(ideHome, 'tools-builder'),
+                Paths.get(ideHome, 'hardware', 'tools', 'avr')
+        ].each { this.tools.add(it.toString()) }
+    }
+
+    void addLibraries() {
+        // -libraries /home/zhurlik/Arduino/libraries
+        this.libraries.addAll(Paths.get(System.properties['user.home'] as String, 'Arduino', 'libraries').toString())
+    }
+
+    void addPrefs(final String ideHome) {
+        /**
+         * -prefs=build.warn_data_percentage=75
+         * -prefs=runtime.tools.avrdude.path=/opt/arduino-1.8.7/hardware/tools/avr
+         * -prefs=runtime.tools.avrdude-6.3.0-arduino14.path=/opt/arduino-1.8.7/hardware/tools/avr
+         * -prefs=runtime.tools.arduinoOTA.path=/opt/arduino-1.8.7/hardware/tools/avr
+         * -prefs=runtime.tools.arduinoOTA-1.2.1.path=/opt/arduino-1.8.7/hardware/tools/avr
+         * -prefs=runtime.tools.avr-gcc.path=/opt/arduino-1.8.7/hardware/tools/avr
+         * -prefs=runtime.tools.avr-gcc-5.4.0-atmel3.6.1-arduino2.path=/opt/arduino-1.8.7/hardware/tools/avr
+         */
+        this.prefs['build.warn_data_percentage'] = 75
+        final String avrDir = Paths.get(ideHome, 'hardware', 'tools', 'avr').toString()
+        this.prefs['runtime.tools.avrdude.path'] = avrDir
+        this.prefs['runtime.tools.avrdude-6.3.0-arduino14.path'] = avrDir
+        this.prefs['runtime.tools.arduinoOTA.path'] = avrDir
+        this.prefs['runtime.tools.arduinoOTA-1.2.1.path'] = avrDir
+        this.prefs['runtime.tools.avr-gcc.path'] = avrDir
+        this.prefs['runtime.tools.avr-gcc-5.4.0-atmel3.6.1-arduino2.path'] = avrDir
+    }
+
+    void validate(final Actions expected) {
+        if (expected != action) {
+            throw new IllegalArgumentException("Action should be: $expected")
+        }
+
+        // -hardware: Mandatory. Folder containing Arduino platforms.
+        if (hardware.isEmpty()) {
+            throw new IllegalArgumentException('-hardware option is mandatory')
+        }
+        // -tools: Mandatory. Folder containing Arduino tools (gcc, avrdude...)
+        if (tools.isEmpty()) {
+            throw new IllegalArgumentException('-tools option is mandatory')
+        }
+        // -fqbn: Mandatory. Fully Qualified Board Name, e.g.: arduino:avr:uno
+        if (fqbn in [null, '']) {
+            throw new IllegalArgumentException('-fqbn option is mandatory')
+        }
+    }
+
+    /**
+     * To be able to modify options.
+     *
+     * @param closure
+     */
+    void customize(final Closure closure) {
+        closure()
+    }
+
+    /**
+     * To be able to use in Exec tasks.
+     *
+     * @return list of strings
+     */
+    List<String> convertToArgs() {
+        final List<String> args = ["-${this.action}",
+                "-logger=${this.logger}"] +
+                this.hardware.collect { "-hardware $it" } +
+                this.tools.collect { "-tools $it" } +
+                "-built-in-libraries ${this.builtInLibraries}" +
+                this.libraries.collect { "-libraries $it" } +
+                "-fqbn=${this.fqbn}" +
+                "-ide-version=${this.ideVersion}" +
+                "-build-path ${this.buildPath}" +
+                "-warnings=${this.warning}" +
+                "-build-cache ${this.buildCache}" +
+                this.prefs.collect { "-prefs=$it.key=$it.value" }
+        if (this.verbose) {
+            args.add('-verbose')
+        }
+        return args
+    }
 }
