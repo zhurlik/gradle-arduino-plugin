@@ -20,8 +20,8 @@ class DumpPrefs extends DefaultTask {
         options.addTools(ideHome)
         options.addLibraries()
         options.addPrefs(ideHome)
-        options.validate(Actions.DUMP_PREFS)
         options.customize(optinsCustomizer)
+        options.validate(Actions.DUMP_PREFS)
 
         project.exec {
             commandLine "${ideHome}/arduino-builder" + options.convertToArgs() + sketch
