@@ -40,6 +40,7 @@ class ArduinoBuilderOptionsTest {
         options.logger = Loggers.MACHINE
         options.addHardware(ideHome)
         options.addTools(ideHome)
+        options.libraries = ['/home/zhurlik/Arduino/libraries']
         options.addLibraries()
         options.addPrefs(ideHome)
         options.addBuiltInLibraries(ideHome)
@@ -51,6 +52,6 @@ class ArduinoBuilderOptionsTest {
         options.addPrefs(ideHome)
         options.verbose = true
 
-        assertEquals(expected, options.convertToArgs().join('\n'), "Actual: ${options.convertToArgs().join('\n')}")
+        assertEquals(expected, options.convertToArgs().join('\n'), 'Android Builder Options:')
     }
 }

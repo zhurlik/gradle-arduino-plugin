@@ -165,8 +165,10 @@ class ArduinoBuilderOptions {
     }
 
     void addLibraries() {
-        // -libraries /home/zhurlik/Arduino/libraries
-        this.libraries.addAll(Paths.get(System.properties['user.home'] as String, 'Arduino', 'libraries').toString())
+        if (this.libraries.isEmpty()) {
+            // -libraries /home/zhurlik/Arduino/libraries
+            this.libraries.add(Paths.get(System.properties['user.home'] as String, 'Arduino', 'libraries').toString())
+        }
     }
 
     void addPrefs(final String ideHome) {
