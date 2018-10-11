@@ -1,4 +1,4 @@
-import com.github.zhurlik.extension.ArduinoIde
+import com.github.zhurlik.task.DumpPrefs
 
 buildscript {
     repositories {
@@ -23,6 +23,8 @@ dependencies {
     arduinoIde 'arduino:linux64:1.8.7@tar.xz'
 }
 
-task t (type: Exec) {
-    commandLine "${project.extensions.getByType(ArduinoIde).homeDir}/arduino-builder" , '--version'
+task testDumpPrefs (type: DumpPrefs) {
+    options.fqbn = 'arduino:avr:nano:cpu=atmega328old'
+    options.ideVersion = 10807
+    sketch = '/github/smart-home/arduino/prototype/src/arduino/main/main.ino'
 }
