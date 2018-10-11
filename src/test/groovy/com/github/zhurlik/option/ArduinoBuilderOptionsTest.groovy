@@ -144,6 +144,16 @@ class ArduinoBuilderOptionsTest {
     }
 
     @Test
+    void testCustomize() {
+        assertNull(options.vidPid)
+        options.customize {
+            options.vidPid = 'test'
+        }
+
+        assertEquals('test', options.vidPid)
+    }
+
+    @Test
     void testValidateDefaults() {
         try {
             options.validate(Actions.COMPILE)
