@@ -181,14 +181,16 @@ class ArduinoBuilderOptions {
          * -prefs=runtime.tools.avr-gcc.path=/opt/arduino-1.8.7/hardware/tools/avr
          * -prefs=runtime.tools.avr-gcc-5.4.0-atmel3.6.1-arduino2.path=/opt/arduino-1.8.7/hardware/tools/avr
          */
-        this.prefs['build.warn_data_percentage'] = 75
-        final String avrDir = Paths.get(ideHome, 'hardware', 'tools', 'avr').toString()
-        this.prefs['runtime.tools.avrdude.path'] = avrDir
-        this.prefs['runtime.tools.avrdude-6.3.0-arduino14.path'] = avrDir
-        this.prefs['runtime.tools.arduinoOTA.path'] = avrDir
-        this.prefs['runtime.tools.arduinoOTA-1.2.1.path'] = avrDir
-        this.prefs['runtime.tools.avr-gcc.path'] = avrDir
-        this.prefs['runtime.tools.avr-gcc-5.4.0-atmel3.6.1-arduino2.path'] = avrDir
+        if (prefs.isEmpty()) {
+            this.prefs['build.warn_data_percentage'] = 75
+            final String avrDir = Paths.get(ideHome, 'hardware', 'tools', 'avr').toString()
+            this.prefs['runtime.tools.avrdude.path'] = avrDir
+            this.prefs['runtime.tools.avrdude-6.3.0-arduino14.path'] = avrDir
+            this.prefs['runtime.tools.arduinoOTA.path'] = avrDir
+            this.prefs['runtime.tools.arduinoOTA-1.2.1.path'] = avrDir
+            this.prefs['runtime.tools.avr-gcc.path'] = avrDir
+            this.prefs['runtime.tools.avr-gcc-5.4.0-atmel3.6.1-arduino2.path'] = avrDir
+        }
     }
 
     void validate(final Actions expected) {
