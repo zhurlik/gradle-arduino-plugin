@@ -40,6 +40,12 @@ class ArduinoBuilderOptionsTest {
     }
 
     @Test
+    void testConvertToArgsDefault() {
+        final String expected = IOUtils.toString(this.getClass().getResource('/test-default-options.txt').toURI())
+        assertEquals(expected, options.convertToArgs().join('\n'), 'Android Builder Options:')
+    }
+
+    @Test
     void testConvertToArgs() {
         final String ideHome = '/opt/arduino-1.8.7/'
         final String expected = IOUtils.toString(this.getClass().getResource('/test-options.txt').toURI())

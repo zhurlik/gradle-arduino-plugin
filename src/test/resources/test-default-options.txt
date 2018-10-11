@@ -1,0 +1,8 @@
+-compile
+-logger=human
+-built-in-libraries null
+-fqbn=null
+-ide-version=null
+-build-path null
+-warnings=default
+-build-cache null
