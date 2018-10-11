@@ -1,15 +1,22 @@
 -dump-prefs
 -logger=machine
--hardware /opt/arduino-1.8.7/hardware
--tools /opt/arduino-1.8.7/tools-builder
--tools /opt/arduino-1.8.7/hardware/tools/avr
--built-in-libraries /opt/arduino-1.8.7/libraries
--libraries /home/zhurlik/Arduino/libraries
+-hardware
+/opt/arduino-1.8.7/hardware
+-tools
+/opt/arduino-1.8.7/tools-builder
+-tools
+/opt/arduino-1.8.7/hardware/tools/avr
+-built-in-libraries
+/opt/arduino-1.8.7/libraries
+-libraries
+/home/zhurlik/Arduino/libraries
 -fqbn=arduino:avr:nano:cpu=atmega328old
 -ide-version=10807
--build-path /tmp/arduino_build_921969
+-build-path
+/tmp/arduino_build_921969
 -warnings=all
--build-cache /tmp/arduino_cache_294101
+-build-cache
+/tmp/arduino_cache_294101
 -prefs=build.warn_data_percentage=75
 -prefs=runtime.tools.avrdude.path=/opt/arduino-1.8.7/hardware/tools/avr
 -prefs=runtime.tools.avrdude-6.3.0-arduino14.path=/opt/arduino-1.8.7/hardware/tools/avr

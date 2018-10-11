@@ -227,18 +227,47 @@ class ArduinoBuilderOptions {
      * @return list of strings
      */
     List<String> convertToArgs() {
-        final List<String> args = ["-${this.action}",
-                "-logger=${this.logger}"] +
-                this.hardware.collect { "-hardware $it" } +
-                this.tools.collect { "-tools $it" } +
-                "-built-in-libraries ${this.builtInLibraries}" +
-                this.libraries.collect { "-libraries $it" } +
-                "-fqbn=${this.fqbn}" +
-                "-ide-version=${this.ideVersion}" +
-                "-build-path ${this.buildPath}" +
-                "-warnings=${this.warning}" +
-                "-build-cache ${this.buildCache}" +
-                this.prefs.collect { "-prefs=$it.key=$it.value" }
+        final List<String> args = new LinkedList<>()
+        args.add("-$action")
+        args.add("-logger=$logger")
+        hardware.forEach {
+            args.add('-hardware')
+            args.add(it)
+        }
+        tools.forEach {
+            args.add('-tools')
+            args.add(it)
+        }
+
+        if (builtInLibraries != null) {
+            args.add('-built-in-libraries')
+            args.add(builtInLibraries)
+        }
+
+        libraries.forEach {
+            args.add('-libraries')
+            args.add(it)
+        }
+
+        args.add("-fqbn=$fqbn")
+        args.add("-ide-version=$ideVersion")
+
+        if (buildPath != null) {
+            args.add('-build-path')
+            args.add(buildPath)
+        }
+
+        args.add("-warnings=$warning")
+
+        if (buildCache != null) {
+            args.add('-build-cache')
+            args.add(buildCache)
+        }
+
+        prefs.collect {
+            "-prefs=${it.key}=${it.value}"
+        }.forEach { args.add(it) }
+
         if (this.verbose) {
             args.add('-verbose')
         }
