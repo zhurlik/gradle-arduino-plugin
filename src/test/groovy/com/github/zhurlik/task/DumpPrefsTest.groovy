@@ -30,6 +30,7 @@ class DumpPrefsTest {
         testProject.tasks.create('testTask', DumpPrefs) {
             options.buildPath = 'test'
             options.fqbn = 'arduino:avr:nano:cpu=atmega328old'
+            sketch = 'test.ino'
         }
     }
 
@@ -41,6 +42,6 @@ class DumpPrefsTest {
             }
         })
 
-        //assertTrue(exp.getMessage().contains("A problem occurred starting process 'command '/test/arduino-ide/arduino-builder"))
+        assertTrue(exp.getMessage().contains("A problem occurred starting process 'command '/test/arduino-ide/arduino-builder"))
     }
 }
