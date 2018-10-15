@@ -12,6 +12,7 @@ The following tasks will be implemented:
 * Burning the Bootloader
 * http://packs.download.atmel.com/
 * http://distribute.atmel.no/tools/opensource/Atmel-AVR-GNU-Toolchain/3.5.4/
+* https://www.microchip.com/mplab/avr-support/avr-and-arm-toolchains-c-compilers
 
 
 # How to use
