@@ -10,6 +10,9 @@ The following tasks will be implemented:
 * Build Arduino sketches
 * Load to device
 * Burning the Bootloader
+* http://packs.download.atmel.com/
+* http://distribute.atmel.no/tools/opensource/Atmel-AVR-GNU-Toolchain/3.5.4/
+
 
 # How to use
 * See [a simple project](sample)
