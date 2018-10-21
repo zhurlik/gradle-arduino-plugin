@@ -46,10 +46,25 @@ class ArduinoBuilderOptionsTest {
     }
 
     @Test
-    void testConvertToArgs() {
+    void testDumpPrefsOptions() {
         final String ideHome = '/opt/arduino-1.8.7/'
-        final String expected = IOUtils.toString(this.getClass().getResource('/test-options.txt').toURI())
+        final String expected = IOUtils.toString(this.getClass().getResource('/test-dump-prefs-options.txt').toURI())
         options.action = Actions.DUMP_PREFS
+        setOptions(ideHome)
+
+        assertEquals(expected, options.convertToArgs().join('\n'), 'Android Builder Dump-Prefs Options:')
+    }
+
+    @Test
+    void testCompileOptions() {
+        final String ideHome = '/opt/arduino-1.8.7/'
+        final String expected = IOUtils.toString(this.getClass().getResource('/test-compile-options.txt').toURI())
+        options.action = Actions.COMPILE
+        setOptions(ideHome)
+        assertEquals(expected, options.convertToArgs().join('\n'), 'Android Builder Compile Options:')
+    }
+
+    private void setOptions(String ideHome) {
         options.logger = Loggers.MACHINE
         options.addHardware(ideHome)
         options.addTools(ideHome)
@@ -64,8 +79,6 @@ class ArduinoBuilderOptionsTest {
         options.buildCache = '/tmp/arduino_cache_294101'
         options.addPrefs(ideHome)
         options.verbose = true
-
-        assertEquals(expected, options.convertToArgs().join('\n'), 'Android Builder Options:')
     }
 
     @Test
