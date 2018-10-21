@@ -23,5 +23,7 @@ class ArduinoPluginTest {
         assertEquals(new URI('https://downloads.arduino.cc'), testProject.repositories.getByName('ivy').url)
         assertNotNull(testProject.getConfigurations ().getByName('arduinoIde'))
         assertNotNull(testProject.tasks.getByName('install'))
+        assertNotNull(testProject.tasks.getByName('dump-prefs'))
+        assertNotNull(testProject.tasks.getByName('compile'))
     }
 }
