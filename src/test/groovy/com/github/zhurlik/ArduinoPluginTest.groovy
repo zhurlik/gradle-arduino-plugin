@@ -25,5 +25,6 @@ class ArduinoPluginTest {
         assertNotNull(testProject.tasks.getByName('install'))
         assertNotNull(testProject.tasks.getByName('dump-prefs'))
         assertNotNull(testProject.tasks.getByName('compile'))
+        assertNotNull(testProject.tasks.getByName('avrdude'))
     }
 }
