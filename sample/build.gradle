@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath group: 'com.github.zhurlik', name: 'gradle-arduino-plugin', version: '0.1'
+        classpath group: 'com.github.zhurlik', name: 'gradle-arduino-plugin', version: '0.3'
     }
 }
 
