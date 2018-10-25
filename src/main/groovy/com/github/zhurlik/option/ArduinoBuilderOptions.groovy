@@ -183,7 +183,7 @@ class ArduinoBuilderOptions extends AbstractOptions {
          * -prefs=runtime.tools.avr-gcc-5.4.0-atmel3.6.1-arduino2.path=/opt/arduino-1.8.7/hardware/tools/avr
          */
         if (prefs.isEmpty()) {
-            this.prefs['build.warn_data_percentage'] = 75
+            this.prefs['build.warn_data_percentage'] = '75'
             final String avrDir = Paths.get(ideHome, 'hardware', 'tools', 'avr').toString()
             this.prefs['runtime.tools.avrdude.path'] = avrDir
             this.prefs['runtime.tools.avrdude-6.3.0-arduino14.path'] = avrDir
