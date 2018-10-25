@@ -4,11 +4,12 @@ import org.apache.commons.io.FileUtils
 
 import java.nio.file.Paths
 import java.time.LocalTime
+import java.util.stream.Stream
 
 /**
  * See https://github.com/arduino/arduino-builder
  */
-class ArduinoBuilderOptions {
+class ArduinoBuilderOptions extends AbstractOptions {
     /**
      * -compile or -dump-prefs or -preprocess:
      * Optional. If omitted, defaults to -compile.
@@ -228,49 +229,22 @@ class ArduinoBuilderOptions {
      */
     List<String> convertToArgs() {
         final List<String> args = new LinkedList<>()
-        args.add("-$action")
-        args.add("-logger=$logger")
-        hardware.forEach {
-            args.add('-hardware')
-            args.add(it)
-        }
-        tools.forEach {
-            args.add('-tools')
-            args.add(it)
-        }
+        Stream.of(
+                addOption(action.toString()),
+                addOption('logger', logger.toString()),
+                addOptions('hardware', hardware),
+                addOptions('tools', tools),
+                addOnlyNotNullOption('built-in-libraries', builtInLibraries),
+                addOptions('libraries', libraries),
+                addOption('fqbn', fqbn),
+                addOption('ide-version', ideVersion),
+                addOnlyNotNullOption('build-path', buildPath),
+                addOption('warnings', warning.toString()),
+                addOnlyNotNullOption('build-cache', buildCache),
+                addMap('prefs', prefs),
+                addFlag('verbose', verbose)
+        ).forEach { it.accept(args) }
 
-        if (builtInLibraries != null) {
-            args.add('-built-in-libraries')
-            args.add(builtInLibraries)
-        }
-
-        libraries.forEach {
-            args.add('-libraries')
-            args.add(it)
-        }
-
-        args.add("-fqbn=$fqbn")
-        args.add("-ide-version=$ideVersion")
-
-        if (buildPath != null) {
-            args.add('-build-path')
-            args.add(buildPath)
-        }
-
-        args.add("-warnings=$warning")
-
-        if (buildCache != null) {
-            args.add('-build-cache')
-            args.add(buildCache)
-        }
-
-        prefs.collect {
-            "-prefs=${it.key}=${it.value}"
-        }.forEach { args.add(it) }
-
-        if (this.verbose) {
-            args.add('-verbose')
-        }
         return args
     }
 }
