@@ -41,8 +41,7 @@ class ArduinoPlugin implements Plugin<Project> {
         }
 
         project.dependencies {
-            antCompress group: 'org.apache.ant', name: 'ant-compress', version: '1.5'
-            antCompress group: 'commons-io', name: 'commons-io', version: '2.6'
+            antCompress group: 'commons-io', name: 'commons-io', version: '2.+'
         }
 
         project.tasks.create('install', Install)
