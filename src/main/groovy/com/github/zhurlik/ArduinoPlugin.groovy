@@ -5,6 +5,7 @@ import com.github.zhurlik.task.Avrdude
 import com.github.zhurlik.task.Compile
 import com.github.zhurlik.task.DumpPrefs
 import com.github.zhurlik.task.Install
+import com.github.zhurlik.task.Version
 import groovy.util.logging.Slf4j
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -48,5 +49,6 @@ class ArduinoPlugin implements Plugin<Project> {
         project.tasks.create('dump-prefs', DumpPrefs)
         project.tasks.create('compile', Compile)
         project.tasks.create('avrdude', Avrdude)
+        project.tasks.create('version', Version)
     }
 }
