@@ -1,4 +1,5 @@
 import com.github.zhurlik.task.DumpPrefs
+import com.github.zhurlik.task.InstallLibrary
 
 buildscript {
     repositories {
@@ -27,4 +28,8 @@ task testDumpPrefs (type: DumpPrefs) {
     options.fqbn = 'arduino:avr:nano:cpu=atmega328old'
     options.ideVersion = 10807
     sketch = '/github/smart-home/arduino/prototype/src/arduino/main/main.ino'
+}
+
+task testInstallLibrary(type: InstallLibrary) {
+    libraryName = 'Bridge:1.7.0'
 }
