@@ -5,6 +5,7 @@ import com.github.zhurlik.task.Avrdude
 import com.github.zhurlik.task.Compile
 import com.github.zhurlik.task.DumpPrefs
 import com.github.zhurlik.task.Install
+import com.github.zhurlik.task.Version
 import groovy.util.logging.Slf4j
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -41,13 +42,13 @@ class ArduinoPlugin implements Plugin<Project> {
         }
 
         project.dependencies {
-            antCompress group: 'org.apache.ant', name: 'ant-compress', version: '1.5'
-            antCompress group: 'commons-io', name: 'commons-io', version: '2.6'
+            antCompress group: 'commons-io', name: 'commons-io', version: '2.+'
         }
 
         project.tasks.create('install', Install)
         project.tasks.create('dump-prefs', DumpPrefs)
         project.tasks.create('compile', Compile)
         project.tasks.create('avrdude', Avrdude)
+        project.tasks.create('version', Version)
     }
 }

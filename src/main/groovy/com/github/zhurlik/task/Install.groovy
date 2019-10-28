@@ -5,8 +5,6 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import org.apache.commons.io.FilenameUtils
 
-import java.nio.file.Paths
-
 /**
  * A task for extracting Arduino IDE into project directory.
  *
@@ -44,20 +42,9 @@ class Install extends DefaultTask {
     }
 
     def unxz(final File dist) {
-        final File tmp = Paths.get(getTemporaryDir().path, 'downloaded-tmp.tar.xz').toFile()
-
-        // ant task
-        project.ant.taskdef(name: 'unxz',
-                classname: 'org.apache.ant.compress.taskdefs.UnXZ',
-                classpath: project.configurations.antCompress.asPath)
-        project.ant.unxz(src: dist, dest: tmp)
-
-        // untar
-        project.copy {
-            from project.tarTree(tmp)
-            into project.projectDir
+        // there is a problem with zero-byte files during extracting via ant tasks
+        project.exec {
+            commandLine 'tar', '-xJvf', dist.path, '-C', project.projectDir.path
         }
-        // del temp file
-        project.delete(tmp)
     }
 }
