@@ -26,7 +26,7 @@ class ArduinoPlugin implements Plugin<Project> {
             //https://downloads.arduino.cc/arduino-1.8.7-linux64.tar.xz
             ivy {
                 url "https://downloads.arduino.cc"
-                layout 'pattern', {
+                patternLayout {
                     //compile 'arduino:linux64:1.8.7@tar.xz'
                     //This maps to the pattern: [organisation]:[module]:[revision]:[classifier]@[ext]
                     artifact '/[organisation]-[revision]-[module].[ext]'

@@ -3,7 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 plugins {
     id 'idea'
     id 'com.github.kt3k.coveralls' version '2.8.2'
-    id 'com.gradle.plugin-publish' version '0.10.0'
+    id 'com.gradle.plugin-publish' version '0.10.1'
     id 'groovy'
     id 'jacoco'
     // for local testing
